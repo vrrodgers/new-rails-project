@@ -1,2 +1,24 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+
+<div class="jumbotron">
+   <h1>Blocipedia</h1>
+   <p>Blocipedia: Social, Markdown Wikis</p>
+   <p>
+    <%= link_to "Sign In", new_user_session_path %> or
+     <%= link_to "Sign Up",  new_user_registration_path, class: 'btn btn-primary' %> today!
+   </p>
+ </div>
+ 
+
+ 
+ <div class="row">
+   <div class="col-md-6">
+     <h2>Create as many public wikis as you want </h2>
+     <p> Free Plan</p>
+     
+   </div>
+   <div class="col-md-6">
+     <h2>Create private wikis!</h2>
+     <p>Premium Plan</p>
+   </div>
+   
+ </div>
