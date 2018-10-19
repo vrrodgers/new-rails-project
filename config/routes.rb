@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :wikis
   get 'sessions/create'
 
   get 'sessions/destroy'
