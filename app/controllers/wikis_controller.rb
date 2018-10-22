@@ -2,12 +2,13 @@ class WikisController < ApplicationController
   before_action :set_wiki, only:[:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  after_action :verify_authorized, except: index
-  after_action :verify_policy_scoped, only: index
+  #after_action :verify_authorized, except: index
+  #after_action :verify_policy_scoped, only: index
 
   def index
-    @user = User.find_by(id: session[:user_id])
+    @user = current_user
     @wiki = Wiki.all
+    
   end
 
   def show
@@ -16,7 +17,7 @@ class WikisController < ApplicationController
 
   def new
     @wiki = current_user.wikis.build
-    authorized @article
+    
   end
 
   def create

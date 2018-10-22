@@ -1,8 +1,7 @@
 class Wiki < ApplicationRecord
   belongs_to :user
 
-  before_action :require_sign_in, except: [:index, :show]
-  before_action :authorize_user, except: [:index, :show]
+  validates :user, presence: true
 
 
   def authorize_user
