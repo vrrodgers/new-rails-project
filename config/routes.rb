@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   resources :wikis do
   end
   resources :charges, only: [:new, :create]
-  get 'sessions/create'
+  resources :users
+   match "users/:id/downgrade" => "users#downgrade", :as => "downgrade_user", via: [:get, :post]
+  
+   get 'sessions/create'
 
   get 'sessions/destroy'
 
