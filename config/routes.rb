@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :wikis do
   end
+  resources :charges, only: [:new, :create]
   get 'sessions/create'
 
   get 'sessions/destroy'
