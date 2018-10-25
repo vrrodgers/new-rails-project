@@ -43,6 +43,8 @@ gem 'jbuilder', '~> 2.5'
  gem 'faker', '~> 1.9', '>= 1.9.1'
  gem 'stripe'
  gem 'figaro', '1.0'
+ gem 'redcarpet', '~> 3.4'
+ gem 'pygments.rb', '~> 1.2', '>= 1.2.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

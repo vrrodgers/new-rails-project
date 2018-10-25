@@ -1,6 +1,36 @@
-<h1> New Wikis</h1>
+<div class="container">
+  <div class="row heading">
+    <div class="col-md-12">
+      <h1>New Wiki</h1>
+      <h4>Brewpedia supports Markdown syntax.</h4>
+      <h4> <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Here's a cheat sheet for reference.</a></h4>
+    </div>
+  </div>
 
+      <div class="col-md-12">
+        <%= render 'form', wiki: @wiki %>
+      </div>
+</div>     
 
-  <div class="col-md-8">
-    <%= render 'form', wiki: @wiki %>
- </div>
+<div class="row">
+  <div class="col-md-9">
+    <h1>New Wiki</h1>
+    <%= render partial: 'form', locals: { wiki: @wiki } %>
+  </div>
+  <div class="col-md-3 box-shaded">
+    <h2>Markdown</h2>
+    <small>
+      <p># large header</p>
+      <p>## medium header</p>
+      <p>### small header</p>
+      <p><strong>**bold**</strong></p>
+      <p><em>*italic*</em></p>
+      <p><mark>==highlight==</mark></p>
+      <p><span style="text-decoration: line-through">~~strike through~~</span></p>
+      <p>--- horizontal rule</p>
+      <p>`code`</p>
+      <p>Links: [linked text](https://linkurl)</p>
+      <p><%= link_to "Markdown cheatsheet", "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet", class: "button-small" %><p>
+    </small>
+  </div>
+</div>
