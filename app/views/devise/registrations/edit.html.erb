@@ -1,58 +1,74 @@
-<div class="container">
 
-  <h2> Edit Acount</h2>
+<div class="row">
+  <div class="col-md-7">
+    <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-  <% if current_user.standard? %>
-    <%= button_to "Upgrade", charges_path, class: 'btn btn-success' %>
-  <% end %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
 
-  <div class="row">
-    <div class="col-md-6">
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email %>
+      </div>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-        <%= devise_error_messages! %>
-
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true %>
-        </div>
-
-        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-        <% end %>
-
-        <div class="field">
-          <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-          <%= f.password_field :password, autocomplete: "off" %>
-          <% if @minimum_password_length %>
-            <br />
-            <em><%= @minimum_password_length %> characters minimum</em>
-          <% end %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "off" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-          <%= f.password_field :current_password, autocomplete: "off" %>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Update" %>
-        </div>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
 
-      <h3>Change my account</h3>
-        <% if current_user.premium? %>
-          <%= button_to "Downgrade", downgrade_user_path(current_user),data: { confirm: "Are you sure?" }, class: 'btn btn-warning' %>
+      <div class="field">
+        <%= f.label :password, "New password" %> <i>(leave blank if you don't want to change your password)</i><br />
+        <%= f.password_field :password, autocomplete: "off" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em><%= @minimum_password_length %> characters minimum</em>
         <% end %>
+      </div>
 
-      <%= button_to "Cancel ", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+      <div class="field">
+        <%= f.label :password_confirmation %> <i>(leave blank if you are not changing your password)</i><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
 
-      <%= link_to "Back", :back %>
-    </div>  
+      <div class="field">
+        <span style="color: red">*</span> <%= f.label :current_password %> <i>(required to confirm your changes)</i><br />
+        <%= f.password_field :current_password, autocomplete: "off" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Update", class: "button-small" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-5 box-shaded">
+    <h2>Account details</h2>
+    <p>Your current membership status:
+      <strong>
+        <% if current_user.standard? %>
+          STANDARD
+        <% end %>
+        <% if current_user.premium? %>
+          PREMIUM
+        <% end %>
+        <% if current_user.admin? %>
+          ADMIN
+        <% end %>
+      </strong>
+    </p>
+
+    <% if current_user.standard? %>
+      <hr>
+      <h4>Upgrade to Premium Membership</h4>
+      <p>For a one-time fee of $15, you can upgrade your membership to Premium, which will give you access to private wikis.</p>
+      <%= link_to "Upgrade to Premium Membership", new_charge_path, class: "button" %>
+    <% end %>
+    <% if current_user.premium? %>
+      <%= button_to "Downgrade", downgrade_user_path(current_user),data: { confirm: "Are you sure?" }, class: 'btn btn-warning' %> 
+      <% end %>
+
+    <hr>
+
+    <h4>Cancel my account</h4>
+    <p>Unhappy with Blocipedia? You can cancel your account at any time. Please be advised that canceling your account will not delete any wikis you have created or contributed to.</p>
+    <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "button-small" %>
   </div>
 </div>
