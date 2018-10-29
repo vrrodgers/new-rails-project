@@ -1,7 +1,11 @@
 class Wiki < ApplicationRecord
   belongs_to :user
-
   validates :user, presence: true
+  has_many :collaborators, inverse_of: :wiki
+   accepts_nested_attributes_for :collaborators, 
+                                 allow_destroy: true,
+                                 reject_if: lambda { |attrs| attrs['user_id'].blank?}
+   has_many :users, through: :collaborators
 
 
   def authorize_user

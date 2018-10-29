@@ -7,31 +7,41 @@ class WikisController < ApplicationController
 
   def index
     @user = current_user
-    @wiki = Wiki.all
-    
-  end
+    @wikis = policy_scope(Wiki)
+    @wikis = WikiPolicy::Scope.new(current_user, Wiki).resolve 
+    @wikis = Wiki.where("private=? OR private=?", false, nil)
+   end
 
   def show
+    #@wiki = Wiki.find(params[:id])
+    @collaborators = @wiki.collaborators
     @wiki = Wiki.find(params[:id])
-    unless (@wiki.private == false) || current_user.premium? || current_user.admin?
-      flash[:alert] = "You must be a premium user to view private wikis."
-      if current_user
+    if @wiki.private?
+      if @wiki.user == current_user
+        wiki_path
+      elsif current_user.standard?
+        flash[:alert] = "You must be a premium user to view private wikis."
         redirect_to new_charge_path
-      else
-        redirect_to new_user_registration_path
+      elsif @wiki.collaborators.exclude?(current_user)
+        flash[:alert] = "You must be a collaborator to view that wiki."
+        redirect_to wikis_path
       end
+    else
+      wiki_path
     end
+
   end
 
   def new
     @wiki = current_user.wikis.build
+    @standard_users = User.where(role: 'standard')
     
   end
 
   def create
     @wiki = current_user.wikis.build(wiki_params)
      
-     #@wiki.user = current_user
+     @wiki.user = current_user
     
      if @wiki.save
       flash[:notice] = "Wiki was saved."
@@ -43,10 +53,12 @@ class WikisController < ApplicationController
     end
 
   def edit
+    @standard_users = User.where(role: 'standard')
+     @collaborators = @wiki.collaborators
   end
   
   def update
-    @wiki.update(wiki_params)
+    @wiki.update_attributes(wiki_params)
      if @wiki.save
        flash[:notice] = "Wiki was updated."
         redirect_to @wiki
@@ -67,9 +79,15 @@ class WikisController < ApplicationController
      end
    end
 
+   def mywiki
+    @wikis = Wiki.where(user_id: current_user.id)
+   end
+
     private
     def wiki_params
-      params.require(:wiki).permit(:title, :body)
+      params.require(:wiki).permit(:title, :body,
+                                   collaborators_attributes:[:id, :user_id, :_destroy ]   
+      )
     end
     def set_wiki
       @wiki = Wiki.find(params[:id])

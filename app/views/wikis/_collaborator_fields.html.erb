@@ -1,0 +1,8 @@
+<div class="form-group nested-fields">
+  <label>User </label>
+    <%= f.text_field :user_id, style: 'display:none;'%>
+    <%= f.collection_select :user_id, @standard_users.order(:user_name),:id,:user_name, include_blank: true %>
+    <label class="btn btn-danger">
+  <%= link_to_remove_association 'Remove User', f , class: 'remove'%>
+  </label>
+</div>

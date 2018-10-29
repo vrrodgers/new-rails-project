@@ -1,0 +1,12 @@
+Collaborators:
+<ul>
+  <% @wiki.collaborators.each do |collaborator| %>
+    <li>
+        <%= User.find_by_id(collaborator.user_id).user_name %>
+        <% if current_user.role == 'premium' && current_user.id == @wiki.user.id%>
+        <%= link_to "Edit User", edit_wiki_path(@wiki), class: 'btn' %>
+        <% end %>
+    </li>
+  <% end %>
+
+</ul>

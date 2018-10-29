@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  get '/mywikis' => 'wikis#mywiki'
   devise_for :users
 
   resources :wikis do
+    resources :collaborators, only: [:new, :create, :edit, :destroy]
   end
   resources :charges, only: [:new, :create]
   resources :users
