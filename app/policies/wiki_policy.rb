@@ -49,7 +49,7 @@ class WikiPolicy
 
  
   private
- 
+   def 
     def article
       record
     end
