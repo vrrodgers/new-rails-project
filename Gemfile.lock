@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/vrrodgers/bluetulip_view_tool
+  revision: 8412daa8980d720d00f87d4d2a28c89d0c9481b8
+  specs:
+    bluetulip_view_tool (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -281,6 +287,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bluetulip_view_tool!
   bootstrap (~> 4.1, >= 4.1.3)
   byebug
   capybara (~> 2.13)

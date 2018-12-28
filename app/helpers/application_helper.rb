@@ -16,4 +16,7 @@ module ApplicationHelper
      markdown = Redcarpet::Markdown.new(renderer, extensions = {})
      markdown.render(text).html_safe
   end
+    def copyright_generator
+      BluetulipViewTool::Renderer.copyright 'BlueTulip', 'All rights reserved'
+    end
 end
