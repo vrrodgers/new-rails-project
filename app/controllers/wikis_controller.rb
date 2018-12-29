@@ -9,13 +9,15 @@ class WikisController < ApplicationController
     @user = current_user
     @wikis = policy_scope(Wiki)
     @wikis = WikiPolicy::Scope.new(current_user, Wiki).resolve 
-    @wikis = Wiki.where("private=? OR private=?", false, nil)
+    @wikis = Wiki.where(private: false).or(Wiki.where(private: nil))
    end
 
   def show
     #@wiki = Wiki.find(params[:id])
     @collaborators = @wiki.collaborators
     @wiki = Wiki.find(params[:id])
+    p ####################################
+    puts @wiki.private
     if @wiki.private?
       if @wiki.user == current_user
         wiki_path
@@ -85,7 +87,7 @@ class WikisController < ApplicationController
 
     private
     def wiki_params
-      params.require(:wiki).permit(:title, :body,
+      params.require(:wiki).permit(:title, :body, :private,
                                    collaborators_attributes:[:id, :user_id, :_destroy ]   
       )
     end
