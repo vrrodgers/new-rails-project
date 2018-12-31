@@ -20,7 +20,7 @@
   <% end %>
   
   <%# if !current_user.role == 'standard'%>
-    <h2>Addtional Collaborator:</h2>
+    <h5>Addtional Collaborator:</h2>
     <div>
       <%= f.fields_for :collaborators do |collaborator_form|%>
         <%= render 'collaborator_fields', f: collaborator_form, locals: { wiki: @wiki} %>
@@ -31,7 +31,7 @@
     </div>
   <%#end%>
   <div class="form-group">
-    <%= f.submit "Save", class: 'btn btn-success' %>
+    <%= f.submit "Save", class: 'btn btn-success save-button' %>
   </div>
 <% end %>
 </div>
