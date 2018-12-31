@@ -1,6 +1,7 @@
 class WikisController < ApplicationController
   before_action :set_wiki, only:[:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :set_current_user
 
   #after_action :verify_authorized, except: index
   #after_action :verify_policy_scoped, only: index
@@ -9,15 +10,14 @@ class WikisController < ApplicationController
     @user = current_user
     @wikis = policy_scope(Wiki)
     @wikis = WikiPolicy::Scope.new(current_user, Wiki).resolve 
-    @wikis = Wiki.where(private: false).or(Wiki.where(private: nil))
+    @wikis = Wiki.all_public_wikis
+    @own_public_wiki = @wikis.own_any_wikis
    end
 
   def show
     #@wiki = Wiki.find(params[:id])
     @collaborators = @wiki.collaborators
     @wiki = Wiki.find(params[:id])
-    p ####################################
-    puts @wiki.private
     if @wiki.private?
       if @wiki.user == current_user
         wiki_path

@@ -6,6 +6,14 @@ class User < ApplicationRecord
   has_many :collaborators
   has_many :wikis, dependent: :destroy
   has_many :collaborations, through: :collaborators, source: :wiki
+  
+  def self.current
+    Thread.current[:user]
+  end
+  
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
 
   before_save { self.role ||= :standard }
 

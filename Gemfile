@@ -49,8 +49,7 @@ gem 'jbuilder', '~> 2.5'
  gem 'jquery-ui-rails', '~> 6.0', '>= 6.0.1'
  gem 'rails_admin', '~> 1.4', '>= 1.4.2'
  gem 'bluetulip_view_tool', git:'https://github.com/vrrodgers/bluetulip_view_tool'
-
-
+ 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -66,7 +65,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
- 
+  gem 'better_errors', '~> 2.5'
+  gem "binding_of_caller"
 end
 group :development, :test do
    gem 'rspec-rails', '~> 3.0'

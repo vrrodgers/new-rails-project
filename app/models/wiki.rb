@@ -9,9 +9,14 @@ class Wiki < ApplicationRecord
 
 
   def authorize_user
-     unless current_user.admin?
-       flash[:alert] = "You must be an admin to do that."
-       redirect_to wikis_path
-     end
-   end
+    unless current_user.admin?
+      flash[:alert] = "You must be an admin to do that."
+      redirect_to wikis_path
+    end
+  end
+
+  scope :all_public_wikis, -> { where(private: false).or(Wiki.where(private: nil))}
+  
+  scope :own_any_wikis, -> { where(user_id: User.current.id)}
+
 end
